@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levin John - Bioinformatician & Data Scientist</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://github.com/levinjohn/profile/blob/main/143122.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+            color: #2d3748;
+            padding-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .dark-mode .section-title {
+            color: #e2e8f0;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(to right, #3b82f6, #a855f7);
+            border-radius: 2px;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .dark-mode .card {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .publication-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out, opacity 0.6s ease-out;
+            opacity: 0;
+        }
+        .publication-list.show {
+            max-height: 1000px; /* Adjust based on content height */
+            opacity: 1;
+        }
+        .publication-item {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .contact-button {
+            transition: all 0.3s ease;
+            transform: perspective(1px) translateZ(0);
+        }
+        .contact-button:hover {
+            transform: perspective(1px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .profile-img {
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+        .mode-toggle {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .mode-toggle:hover {
+            transform: scale(1.1);
+        }
+        .contact-link {
+            transition: color 0.3s ease;
+        }
+        .contact-link:hover {
+            color: #3b82f6;
+        }
+        .dark-mode .contact-link:hover {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header class="hero-section text-white py-20 relative">
+        <div class="container mx-auto px-4 text-center">
+            <img src="https://via.placeholder.com/150?text=Levin+John" alt="Levin John" class="profile-img rounded-full w-32 h-32 mx-auto mb-4">
+            <h1 class="text-5xl font-extrabold mb-2 animate__animated animate__fadeIn">Levin John</h1>
+            <p class="text-xl mb-4">Bioinformatician | Data Scientist</p>
+            <p class="text-md mb-6">Visiting Research Student, University of Edinburgh</p>
+            <a href="#contact" class="contact-button inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold">Get in Touch</a>
+            <button id="mode-toggle" class="mode-toggle absolute top-4 right-4 bg-white text-gray-900 rounded-full p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <nav class="bg-white shadow-md py-4 sticky top-0 z-10 dark-mode:bg-gray-800">
+        <div class="container mx-auto px-4 flex justify-center space-x-8">
+            <a href="#experience" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Experience</a>
+            <a href="#publications" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Publications</a>
+            <a href="#teaching" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Teaching</a>
+            <a href="#presentations" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Presentations</a>
+            <a href="#education" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Education</a>
+            <a href="#contact" class="text-gray-600 hover:text-blue-500 dark-mode:text-gray-300 dark-mode:hover:text-blue-400">Contact</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-12">
+        <section id="experience" class="mb-16">
+            <h2 class="section-title text-3xl mb-6">Professional Experience</h2>
+            <div class="grid gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                    <h3 class="text-xl font-semibold">Visiting Research Fellow</h3>
+                    <p class="text-gray-600 dark-mode:text-gray-300">Institute of Regeneration & Repair, University of Edinburgh</p>
+                    <p class="text-gray-500 dark-mode:text-gray-400">Principal Investigator: Dr Nik Hirani</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Developing machine learning models to identify biomarkers in patients with Idiopathic Pulmonary Fibrosis (IPF).</li>
+                        <li>Creating a tool for risk stratification of IPF patients.</li>
+                    </ul>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                    <h3 class="text-xl font-semibold">Data Scientist/Bioinformatician</h3>
+                    <p class="text-gray-600 dark-mode:text-gray-300">Centre for Integrative Omics Data Science (CIODS), Yenepoya University</p>
+                    <p class="text-gray-500 dark-mode:text-gray-400">Principal Investigator: Dr Rajesh Raju</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Specialized in Computational and Structural Biology.</li>
+                        <li>Managed extensive biological dataset analysis and developed software solutions.</li>
+                        <li>Applied deep-learning models and bioinformatics techniques to proteomics and phosphoproteomics datasets.</li>
+                        <li>Derived structural insights through molecular docking and simulations.</li>
+                        <li>Collaborated to automate data handling, normalization, and visualization.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="mb-16">
+            <h2 id="publications-title" class="section-title text-3xl mb-6">Publications</h2>
+            <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                <div class="publication-preview">
+                    <p class="mb-4">Selected publications showcasing research in bioinformatics, computational biology, and data science.</p>
+                    <div class="publication-item">
+                        <p>1. John, L., et al. (2025). A deep learning and molecular modeling approach to repurposing Cangrelor as a potential inhibitor of Nipah virus. <em>Scientific Reports</em>, 15, 16440. <a href="https://www.nature.com/articles/s41598-025-00024-3" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>2. Thaikkad, A., et al. (2025). Cangrelor and AVN-944 as repurposable candidate drugs for hMPV. <em>Mol Divers</em>. <a href="https://doi.org/10.1007/s11030-025-11206-6" class="contact-link">Link</a></p>
+                    </div>
+                </div>
+                <div id="full-publication-list" class="publication-list">
+                    <div class="publication-item">
+                        <p>3. Raghu DH, et al. (2025). Unravelling the phosphoregulatory network of protein kinase C-delta (PKC-δ). <em>Biochim Biophys Acta Proteins Proteom</em>, 1873(5), 141080. <a href="https://doi.org/10.1016/j.bbapap.2025.141080" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>4. Lubaba, F., et al. (2025). Theranostic Target NSUN2, a C(5)-Methyltransferase, Phospho-Regulatory Network Uncovered with Systematic Assembly of 805 Datasets. <em>Omics: a journal of integrative biology</em>, 29(4), 164-177. <a href="https://doi.org/10.1089/omi.2025.0025" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>5. Mahin, A., et al. (2025). Orchestrating Intracellular Calcium Signaling Cascades by PhosphositeCentric Regulatory Network: A Comprehensive Analysis on Kinases CAMKK1 and CAMKK2. <em>Omics: a journal of integrative biology</em>, 29(4), 139-153. <a href="https://doi.org/10.1089/omi.2024.0196" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>6. Nisar, M., et al. (2025). ProteoArk: A one-pot proteomics data analysis and visualization tool for biologists. <em>Journal of Proteome Research</em>. <a href="https://pubs.acs.org/doi/10.1021/acs.jproteome.4c00556" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>7. Cartlidge, M.K., et al. (2024). A modified Delphi exercise in physician-perceived risk factors for drug-induced pneumotoxicity in patients with rheumatological disease. <em>BMC Pulmonary Medicine</em>. <a href="https://doi.org/10.1186/s12890-024-03287-0" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>8. Sanjeev, D., et al. (2024). Exploring the phospho-landscape of NEK6 kinase: systematic annotation of phosphosites and their implications as biomarkers in carcinogenesis. <em>JPP</em>. <a href="https://doi.org/10.1007/s42485-024-00146-8" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>9. John, L., et al. (2024). Elucidating the phosphoregulatory network of predominant phosphosite in AXL kinase: an integrative bioinformatic approach. <em>J Proteins Proteom</em>. <a href="https://doi.org/10.1007/s42485-024-00147-7" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>10. Thomas, S.D., et al. (2024). Machine learning strategies in microRNA research: bridging genome to phenome. <em>OMICS: A Journal of Integrative Biology</em>, 28(5), 213-233. <a href="https://doi.org/10.1089/omi.2024.0047" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>11. Priyanka, P., et al. (2024). A global phosphosite-correlated network map of Thousand And One Kinase 1 (TAOK1). <em>The International Journal of Biochemistry & Cell Biology</em>, 170, 106558. <a href="https://doi.org/10.1016/j.biocel.2024.106558" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>12. Banjan, B., et al. (2024). Potential protein kinase inhibitors that target G-quadruplex DNA structures in the human telomeric regions. <em>Molecular Diversity</em>, 1-15. <a href="http://doi.org/10.1007/s11030-023-10768-7" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>13. Sanjeev, D., et al. (2024). Tyr352 as a predominant phosphosite in the understudied kinase and molecular target, HIPK1: implications for cancer therapy. <em>OMICS: A Journal of Integrative Biology</em>, 28(3), 111-124. <a href="https://doi.org/10.1089/omi.2023.0244" class="contact-link">Link</a></p>
+                    </div>
+                    <div class="publication-item">
+                        <p>14. Thatai, A.K.S., et al. (2023). VirhostlncR: A comprehensive database to explore lncRNAs and their targets in viral infections. <em>Computers in Biology and Medicine</em>, 164, 107279. <a href="https://doi.org/10.1016/j.compbiomed.2023.107279" class="contact-link">Link</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="teaching" class="mb-16">
+            <h2 class="section-title text-3xl mb-6">Teaching & Mentorship</h2>
+            <div class="grid gap-6">
+                <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                    <h3 class="text-xl font-semibold">Training Lead, Data Visualization Team</h3>
+                    <p class="text-gray-600 dark-mode:text-gray-300">CIODS, Yenepoya University | Sep 2022 - Mar 2025</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Taught bio-curation, data handling, interpretation, visualization, programming, and structural biology techniques.</li>
+                        <li>Developed video tutorials for in-house tools and scientific illustrations for publications.</li>
+                        <li>Member of International Society for Computational Biology (ISCB).</li>
+                    </ul>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                    <h3 class="text-xl font-semibold">Journal Reviewer</h3>
+                    <p class="text-gray-600 dark-mode:text-gray-300">Aug 2024 - Present</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li>Computers in Biology and Medicine (Impact Factor: 7.0)</li>
+                        <li>NeuroMolecular Medicine (Impact Factor: 3.3)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="presentations" class="mb-16">
+            <h2 class="section-title text-3xl mb-6">Presentations & Participations</h2>
+            <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                <ul class="list-disc ml-6">
+                    <li><strong>Resource Person</strong> - Workshop on Molecular Docking, Yenepoya University, Mar 2025.</li>
+                    <li><strong>Invigilator</strong> - Yentech Mania, Yenepoya Institute of Technology, Apr 2024.</li>
+                    <li><strong>Poster Presentation</strong> - Cardioprotective potential of Hybanthus enneaspermus, May 2023.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education" class="mb-16">
+            <h2 class="section-title text-3xl mb-6">Education & Certifications</h2>
+            <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                <ul class="list-disc ml-6">
+                    <li>AI For Everyone, DeepLearning.AI, Coursera.</li>
+                    <li>Overview of Data Visualization, Coursera Project Network.</li>
+                    <li>The R Programming Environment, Johns Hopkins University, Coursera.</li>
+                    <li>Custom Prediction Routine on Google AI Platform, Coursera Project Network.</li>
+                    <li>Antimicrobial Resistance - Theory and Methods, Technical University of Denmark, Coursera.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="mb-16">
+            <h2 class="section-title text-3xl mb-6">Contact & References</h2>
+            <div class="card bg-white p-6 rounded-lg shadow-lg dark-mode:bg-gray-800">
+                <p class="mb-2"><strong>Email:</strong> <a href="mailto:levin.john@example.com" class="contact-link">levin.john@example.com</a></p>
+                <p class="mb-4"><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/levin-john" class="contact-link">linkedin.com/in/levin-john</a></p>
+                <h3 class="text-lg font-semibold">References</h3>
+                <ul class="list-disc ml-6 mt-2">
+                    <li>Dr Nik Hirani, University of Edinburgh, <a href="mailto:n.hirani@ed.ac.uk" class="contact-link">n.hirani@ed.ac.uk</a></li>
+                    <li>Dr Rajesh Raju, Yenepoya University, <a href="mailto:rajeshraju@yenepoya.edu.in" class="contact-link">rajeshraju@yenepoya.edu.in</a></li>
+                    <li>Dr Abhithaj Jayanandan, Yenepoya University, <a href="mailto:abhithaj.j.ciods@yenepoya.edu.in" class="contact-link">abhithaj.j.ciods@yenepoya.edu.in</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2025 Levin John. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Dark mode toggle
+        const toggleButton = document.getElementById('mode-toggle');
+        const body = document.body;
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            toggleButton.innerHTML = isDark 
+                ? `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>`
+                : `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"></path></svg>`;
+        });
+
+        // Toggle publication list
+        const publicationsTitle = document.getElementById('publications-title');
+        const fullPublicationList = document.getElementById('full-publication-list');
+        publicationsTitle.addEventListener('click', () => {
+            fullPublicationList.classList.toggle('show');
+        });
+
+        // Add animation delay to publication items
+        document.querySelectorAll('.publication-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
