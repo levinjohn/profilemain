@@ -11,33 +11,53 @@
   <meta property="og:image" content="/assets/og-image.jpg" />
   <meta name="theme-color" content="#0f172a" />
 
-  <!-- Favicon (drop a 512x512 at /assets/favicon.png) -->
   <link rel="icon" href="/assets/favicon.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind via CDN (no build step) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "Noto Sans", "sans-serif"] },
+          fontFamily: { 
+            sans: ["Inter", "ui-sans-serif", "system-ui"],
+            display: ["Space Grotesk", "Inter", "system-ui"]
+          },
           colors: {
             brand: {
-              50:  "#eff6ff",
-              100: "#dbeafe",
-              200: "#bfdbfe",
-              300: "#93c5fd",
-              400: "#60a5fa",
-              500: "#3b82f6",
-              600: "#2563eb",
-              700: "#1d4ed8",
-              800: "#1e40af",
-              900: "#1e3a8a",
+              50:  "#f0f9ff",
+              100: "#e0f2fe",
+              200: "#bae6fd",
+              300: "#7dd3fc",
+              400: "#38bdf8",
+              500: "#0ea5e9",
+              600: "#0284c7",
+              700: "#0369a1",
+              800: "#075985",
+              900: "#0c4a6e",
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
             }
           }
         }
@@ -46,12 +66,71 @@
     }
   </script>
   <style>
-    /* nice underline */
-    .link-underline { text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-position: 0% 100%; background-repeat: no-repeat; background-size: 0% 2px; transition: background-size .2s ease; }
-    .link-underline:hover { background-size: 100% 2px; }
+    .link-underline { 
+      position: relative;
+      text-decoration: none;
+    }
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+    .link-underline:hover::after {
+      width: 100%;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+    
+    .blob {
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(3, 105, 161, 0.3) 100%);
+      filter: blur(60px);
+    }
+    
+    @keyframes blob {
+      0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+      25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+      50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+      75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+    }
+    
+    .animate-blob {
+      animation: blob 10s ease-in-out infinite;
+    }
+
+    .scroll-indicator {
+      position: relative;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(3, 105, 161, 0.05) 100%);
+    }
   </style>
 
-  <!-- Schema.org Person -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -70,108 +149,215 @@
   }
   </script>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-brand-200 selection:text-slate-900">
-  <!-- Top notice bar -->
-  <div class="hidden md:block bg-gradient-to-r from-brand-700 via-brand-600 to-brand-700 text-white text-sm py-2">
-    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between">
-      <span class="opacity-90">Visiting Research Student — University of Edinburgh | Bioinformatician - Yenepoya University</span>
-      <div class="flex items-center gap-3">
-        <a class="underline underline-offset-4 hover:opacity-90" href="#contact">Contact</a>
-        <button id="themeToggle" class="rounded-full border border-white/30 px-3 py-1 text-xs hover:bg-white/10">Toggle theme</button>
-      </div>
-    </div>
-  </div>
-
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-brand-200 selection:text-slate-900 overflow-x-hidden">
+  
   <!-- Header / Nav -->
-  <header class="sticky top-0 z-40 backdrop-blur bg-white/70 dark:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800">
-    <nav class="max-w-6xl mx-auto px-4">
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/60 dark:border-slate-800/60 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <a href="#home" class="font-extrabold tracking-tight text-lg">Levin <span class="text-brand-600">John</span></a>
-        <div class="hidden md:flex items-center gap-6 text-sm">
-          <a href="#about" class="hover:text-brand-600">About</a>
-          <a href="#experience" class="hover:text-brand-600">Experience</a>
-          <a href="#Reference" class="hover:text-brand-600">Reference</a>
-          <a href="#publications" class="hover:text-brand-600">Publications</a>
-          <a href="#teaching" class="hover:text-brand-600">Teaching</a>
-          <a href="#education" class="hover:text-brand-600">Education</a>
-          <a href="#contact" class="hover:text-brand-600">Contact</a>
+        <a href="#home" class="font-display font-bold tracking-tight text-xl hover:scale-105 transition-transform">
+          Levin <span class="gradient-text">John</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="#about" class="link-underline hover:text-brand-600 transition-colors">About</a>
+          <a href="#experience" class="link-underline hover:text-brand-600 transition-colors">Experience</a>
+          <a href="#publications" class="link-underline hover:text-brand-600 transition-colors">Publications</a>
+          <a href="#contact" class="link-underline hover:text-brand-600 transition-colors">Contact</a>
+          <button id="themeToggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle theme">
+            <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="w-5 h-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
         </div>
-        <button id="openMenu" class="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-slate-300 dark:border-slate-700" aria-label="Open Menu">☰</button>
+        <button id="openMenu" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open Menu">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
     </nav>
   </header>
 
   <!-- Mobile menu -->
-  <div id="mobileMenu" class="md:hidden hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-    <div class="max-w-6xl mx-auto px-4 py-3 space-y-2">
-      <a href="#about" class="block">About</a>
-      <a href="#experience" class="block">Experience</a>
-      <a href="#publications" class="block">Publications</a>
-      <a href="#teaching" class="block">Teaching</a>
-      <a href="#education" class="block">Education</a>
-      <a href="#contact" class="block">Contact</a>
+  <div id="mobileMenu" class="fixed inset-0 z-40 hidden">
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="menuBackdrop"></div>
+    <div class="fixed right-0 top-0 bottom-0 w-64 bg-white dark:bg-slate-900 shadow-2xl transform transition-transform duration-300 ease-out">
+      <div class="p-6">
+        <button id="closeMenu" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <nav class="mt-12 space-y-4">
+          <a href="#about" class="block py-2 hover:text-brand-600 transition-colors">About</a>
+          <a href="#experience" class="block py-2 hover:text-brand-600 transition-colors">Experience</a>
+          <a href="#publications" class="block py-2 hover:text-brand-600 transition-colors">Publications</a>
+          <a href="#reference" class="block py-2 hover:text-brand-600 transition-colors">References</a>
+          <a href="#contact" class="block py-2 hover:text-brand-600 transition-colors">Contact</a>
+        </nav>
+      </div>
     </div>
   </div>
 
   <!-- Hero -->
-  <section id="home" class="relative overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 pt-14 pb-16 md:pt-24 md:pb-24">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
-            Bioinformatician & Data Scientist
+  <section id="home" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <!-- Animated background blobs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="blob animate-blob absolute top-20 -left-20 w-96 h-96"></div>
+      <div class="blob animate-blob absolute bottom-20 -right-20 w-96 h-96 animation-delay-2000"></div>
+      <div class="blob animate-blob absolute top-1/2 left-1/2 w-96 h-96 animation-delay-4000"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="animate-fade-in">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-300 text-sm font-medium mb-6">
+            <span class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></span>
+            Available for collaborations
+          </div>
+          
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
+            Bioinformatician & 
+            <span class="gradient-text">Data Scientist</span>
           </h1>
-          <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
-            I build pipelines for analysing proteomics and clinical data — focusing on biomarker discovery, survival, and translational research. 
+          
+          <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+            Building ML pipelines for proteomics and clinical data — focusing on biomarker discovery, survival analysis, and translational research.
           </p>
-          <p class="mt-3 text-lg text-slate-600 dark:text-slate-300"> 
-            Yeah, Of course. I design machine learning pipelines as well.... 
-            Wanna collaborate ? Get in touch ! 
+          
+          <p class="text-base sm:text-lg text-slate-500 dark:text-slate-400 mb-8">
+            Passionate about turning complex biological data into actionable clinical insights. Let's collaborate!
           </p>
 
-
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#publications" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow">
-              📚 Publications
+          <div class="flex flex-wrap gap-4 mb-8">
+            <a href="#publications" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-lg shadow-brand-500/30 hover:shadow-xl hover:shadow-brand-500/40 transition-all font-medium">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Publications
             </a>
-            <a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800">
-              ✉️ Get in touch
+            <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-slate-300 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400 transition-all font-medium">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Get in touch
             </a>
-            <a href="Levin_John_CV.pdf" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-brand-600 text-brand-700 dark:text-brand-300 hover:bg-brand-50 dark:hover:bg-brand-900/30">
-              ⬇️ Download CV
+            <a href="Levin_John_CV.pdf" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-slate-300 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 hover:text-brand-600 dark:hover:text-brand-400 transition-all font-medium">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download CV
             </a>
           </div>
-          <div class="mt-4 text-sm text-slate-500 dark:text-slate-400">
-            Python • R • PyTorch • TensorFlow • Survival Analysis • GNN • Transformers • Docking & MDS
+
+          <!-- Tech stack pills -->
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">Python</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">R</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">PyTorch</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">TensorFlow</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">GNN</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">Transformers</span>
+            <span class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full">Survival Analysis</span>
           </div>
         </div>
-        <div class="relative">
-          <!-- Drop your headshot at /assets/profile.jpg (square, ~800px) -->
-          <img src="profile.jpg" alt="Portrait of Levin John" class="w-56 h-56 md:w-72 md:h-72 rounded-3xl object-cover shadow-xl ring-4 ring-brand-200/60 mx-auto" loading="lazy">
-          <!-- Decorative blob -->
-          <div class="absolute -z-10 -top-8 -right-8 w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-brand-200 to-brand-400 blur-3xl opacity-40"></div>
+
+        <div class="relative animate-slide-up lg:order-last order-first">
+          <div class="relative z-10">
+            <img src="profile.jpg" alt="Levin John" class="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-3xl object-cover shadow-2xl ring-4 ring-white dark:ring-slate-800 mx-auto animate-float" loading="lazy">
+          </div>
+          <!-- Decorative elements -->
+          <div class="absolute -z-10 top-0 right-0 w-72 h-72 bg-gradient-to-br from-brand-400 to-brand-600 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+          <div class="absolute -z-10 bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-brand-500 to-brand-300 rounded-3xl blur-3xl opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator hidden lg:block">
+        <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center stat-card p-6 rounded-2xl">
+          <div class="text-4xl font-display font-bold gradient-text mb-2">3+</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Years Experience</div>
+        </div>
+        <div class="text-center stat-card p-6 rounded-2xl">
+          <div class="text-4xl font-display font-bold gradient-text mb-2">15+</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Publications</div>
+        </div>
+        <div class="text-center stat-card p-6 rounded-2xl">
+          <div class="text-4xl font-display font-bold gradient-text mb-2">2</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Institutions</div>
+        </div>
+        <div class="text-center stat-card p-6 rounded-2xl">
+          <div class="text-4xl font-display font-bold gradient-text mb-2">∞</div>
+          <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Collaborations</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- About -->
-  <section id="about" class="py-12">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="grid md:grid-cols-3 gap-8 items-start">
-        <div class="md:col-span-2">
-          <h2 class="text-2xl font-bold">About</h2>
-          <p class="mt-3 text-slate-700 dark:text-slate-300 leading-relaxed">
-            I’m a bioinformatician with over three years of experience using machine learning, deep learning, and graph neural networks to make sense of complex biological data. Most of my work focuses on high-throughput proteomics and clinical datasets, where I specialize in building bioinformatics pipelines and statistical analysis for identifying biomarkers. In addition, I have worked with clinicians to establish a risk assessment system for IPF patients in survival analysis with clinical variables. I have collaborated on numerous projects and co-authored in 15 international (journal) publications. My aim is to focus strongly on the translational of data-driven insights into real-world clinical applications. 
-          </p>
+  <section id="about" class="py-20 bg-slate-50 dark:bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-3 gap-12 items-start">
+        <div class="lg:col-span-2">
+          <h2 class="font-display text-3xl sm:text-4xl font-bold mb-6">About Me</h2>
+          <div class="prose prose-lg dark:prose-invert max-w-none">
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              I'm a bioinformatician with over three years of experience using <strong>machine learning</strong>, <strong>deep learning</strong>, and <strong>graph neural networks</strong> to make sense of complex biological data. Most of my work focuses on high-throughput proteomics and clinical datasets, where I specialize in building bioinformatics pipelines and statistical analysis for identifying biomarkers.
+            </p>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+              In addition, I have worked with clinicians to establish a risk assessment system for IPF patients in survival analysis with clinical variables. I have collaborated on numerous projects and co-authored <strong>15 international journal publications</strong>.
+            </p>
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+              My aim is to focus strongly on the translation of data-driven insights into real-world clinical applications, bridging the gap between computational biology and precision medicine.
+            </p>
+          </div>
         </div>
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
-          <h3 class="font-semibold">Quick Links</h3>
-          <ul class="mt-2 space-y-2 text-sm">
-            <li>📧 <a class="link-underline" href="mailto:vblevinjohn@gmail.com">vblevinjohn@gmail.com</a></li>
-            <li>🔗 <a class="link-underline" href="https://www.linkedin.com/in/levin-john-542086190/" target="_blank" rel="noreferrer">LinkedIn</a></li>
-            <li>🧪 <a class="link-underline" href="#publications">Selected Publications</a></li>
-          </ul>
+
+        <!-- Quick Info Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-lg card-hover">
+          <h3 class="font-display font-semibold text-lg mb-4">Quick Links</h3>
+          <div class="space-y-3">
+            <a href="mailto:vblevinjohn@gmail.com" class="flex items-center gap-3 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors group">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span class="text-sm group-hover:underline">vblevinjohn@gmail.com</span>
+            </a>
+            <a href="https://www.linkedin.com/in/levin-john-542086190/" target="_blank" rel="noreferrer" class="flex items-center gap-3 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors group">
+              <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+              <span class="text-sm group-hover:underline">LinkedIn Profile</span>
+            </a>
+            <a href="#publications" class="flex items-center gap-3 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors group">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span class="text-sm group-hover:underline">Publications</span>
+            </a>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+            <h4 class="font-semibold text-sm mb-3">Current Positions</h4>
+            <div class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+              <p>🎓 Visiting Research Student, University of Edinburgh</p>
+              <p>🔬 Bioinformatician, Yenepoya University</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -409,6 +595,5 @@
   </script>
 </body>
 </html>
-
 
 
