@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — Levin John</title>
+
+<!-- Theme sync with index.html -->
+<script>
+(function () {
+  const stored = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (stored === 'dark' || (!stored && prefersDark)) {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Inter", "system-ui"],
+        display: ["Space Grotesk", "Inter"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* Section expand/collapse */
+.section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s ease;
+}
+.section-content.open {
+  max-height: 3000px;
+}
+
+/* Fade animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOutDown {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(12px); }
+}
+.fade-in { animation: fadeInUp 0.7s ease forwards; }
+.fade-out { animation: fadeOutDown 0.5s ease forwards; }
+
+/* Page dimming */
+.page-dim > *:not(.active-section):not(#lightbox) {
+  filter: blur(6px) brightness(0.6);
+  pointer-events: none;
+}
+
+/* Caption box */
+.caption-box {
+  backdrop-filter: blur(12px);
+  background: rgba(15,23,42,0.75);
+}
+.dark .caption-box {
+  background: rgba(2,6,23,0.75);
+}
+
+/* Lightbox */
+#lightbox { display: none; }
+#lightbox.active { display: flex; }
+</style>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+
+<header class="sticky top-0 z-40 backdrop-blur bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <h1 class="font-display font-bold text-xl">Gallery</h1>
+    <a href="index.html" class="text-sm underline">Back to Home</a>
+  </div>
+</header>
+
+<main id="page" class="max-w-6xl mx-auto px-4 py-12 space-y-10">
+
+<!-- TEMPLATE SECTION -->
+<script type="text/template" id="section-template">
+<section class="gallery-section rounded-2xl overflow-hidden border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+  <button class="section-trigger w-full text-left group">
+    <div class="relative h-56">
+      <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+      <div class="absolute inset-0 bg-black/40 flex items-center px-6">
+        <h2 class="text-2xl font-display font-bold text-white"></h2>
+      </div>
+    </div>
+  </button>
+  <div class="section-content p-6"></div>
+</section>
+</script>
+
+</main>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
+  <img id="lightboxImg" class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl">
+</div>
+
+<script>
+/* -------------------- GALLERY DATA (JSON) -------------------- */
+const gallerySections = [
+  {
+    key: "ciods",
+    title: "Centre for Integrative Omics Data Science",
+    cover: "images/ciods_cover.jpg",
+    images: [
+      { src: "images/ciods_1.jpg", caption: "CIODS collaborative research space" },
+      { src: "images/ciods_2.jpg", caption: "Omics data analysis pipeline" }
+    ]
+  },
+  {
+    key: "edinburgh",
+    title: "Edinburgh",
+    cover: "images/edinburgh_cover.jpg",
+    images: [
+      { src: "images/edinburgh_1.jpg", caption: "University of Edinburgh campus" }
+    ]
+  },
+  {
+    key: "mangalore",
+    title: "Mangalore",
+    cover: "images/mangalore_cover.jpg",
+    images: [
+      { src: "images/mangalore_1.jpg", caption: "Coastal Mangalore skyline" }
+    ]
+  },
+  {
+    key: "kerala",
+    title: "Kerala",
+    cover: "images/kerala_cover.jpg",
+    images: [
+      { src: "images/kerala_1.jpg", caption: "Backwaters and landscapes" }
+    ]
+  },
+  {
+    key: "lens",
+    title: "Through the Lens",
+    cover: "images/lens_cover.jpg",
+    images: [
+      { src: "images/lens_1.jpg", caption: "Moments captured in motion" }
+    ]
+  }
+];
+
+/* -------------------- RENDER -------------------- */
+const page = document.getElementById('page');
+const template = document.getElementById('section-template').innerHTML;
+
+gallerySections.forEach(section => {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = template;
+
+  const el = wrapper.firstElementChild;
+  el.dataset.key = section.key;
+  el.querySelector('img').src = section.cover;
+  el.querySelector('h2').textContent = section.title;
+
+  const content = el.querySelector('.section-content');
+  content.innerHTML = `
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      ${section.images.map(img => `
+        <div class="image-card opacity-0">
+          <div class="relative rounded-xl border overflow-hidden cursor-zoom-in">
+            <img src="${img.src}" class="gallery-img w-full h-56 object-cover">
+            <div class="caption-box absolute bottom-3 left-3 right-3 p-3 text-xs text-white rounded-lg">
+              ${img.caption}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  page.appendChild(el);
+});
+
+/* -------------------- INTERACTION -------------------- */
+let activeSection = null;
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+
+function openSection(section) {
+  if (activeSection && activeSection !== section) closeSection(activeSection);
+
+  section.classList.add('active-section');
+  page.classList.add('page-dim');
+  const content = section.querySelector('.section-content');
+  content.classList.add('open');
+  activeSection = section;
+
+  content.querySelectorAll('.image-card').forEach((c, i) => {
+    c.classList.remove('fade-out');
+    c.style.animationDelay = `${i * 150}ms`;
+    c.classList.add('fade-in');
+  });
+}
+
+function closeSection(section) {
+  const content = section.querySelector('.section-content');
+  content.querySelectorAll('.image-card').forEach(c => {
+    c.classList.remove('fade-in');
+    c.classList.add('fade-out');
+  });
+
+  setTimeout(() => {
+    content.classList.remove('open');
+    section.classList.remove('active-section');
+    page.classList.remove('page-dim');
+    activeSection = null;
+  }, 400);
+}
+
+document.addEventListener('click', e => {
+  const trigger = e.target.closest('.section-trigger');
+  const img = e.target.closest('.gallery-img');
+
+  if (trigger) {
+    e.stopPropagation();
+    openSection(trigger.closest('.gallery-section'));
+    return;
+  }
+
+  if (img) {
+    e.stopPropagation();
+    lightboxImg.src = img.src;
+    lightbox.classList.add('active');
+    return;
+  }
+
+  if (activeSection) closeSection(activeSection);
+});
+
+/* ESC */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      lightboxImg.src = '';
+    } else if (activeSection) {
+      closeSection(activeSection);
+    }
+  }
+});
+
+/* Lightbox close */
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+  lightboxImg.src = '';
+});
+</script>
+
+</body>
+</html>
